@@ -1,0 +1,59 @@
+{% extends 'asistencia/base.html' %}
+
+{% block content %}
+<h2>Registrar Asistencia</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Alumno:</label>
+            <select name="id_alumno" class="form-select" required>
+                <option value="">Seleccionar alumno...</option>
+                {% for alumno in alumnos %}
+                <option value="{{ alumno.id_alumno }}">{{ alumno.nombre }} {{ alumno.apellido }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha:</label>
+            <input type="date" name="fecha" class="form-control" required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Clase:</label>
+            <input type="text" name="clase" class="form-control" placeholder="Ej: Ballet, Salsa..." required>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Estado:</label>
+            <select name="estado" class="form-select" required>
+                <option value="presente">Presente</option>
+                <option value="ausente">Ausente</option>
+                <option value="tardanza">Tardanza</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Hora Entrada:</label>
+            <input type="time" name="entrada" class="form-control" required>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Hora Salida:</label>
+            <input type="time" name="salida" class="form-control" required>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        <i class="fas fa-save"></i> Guardar Asistencia
+    </button>
+    <a href="{% url 'index' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

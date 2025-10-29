@@ -1,0 +1,55 @@
+{% extends 'asistencia/base.html' %}
+
+{% block content %}
+<h1 class="mb-4"><i class="fas fa-user-friends"></i> Control de Asistencias</h1>
+
+{% if asistencias %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Alumno</th>
+                <th>Fecha</th>
+                <th>Clase</th>
+                <th>Estado</th>
+                <th>Horario</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asistencia in asistencias %}
+            <tr>
+                <td>{{ asistencia.id_asistencia }}</td>
+                <td>{{ asistencia.id_alumno.nombre }} {{ asistencia.id_alumno.apellido }}</td>
+                <td>{{ asistencia.fecha }}</td>
+                <td>{{ asistencia.clase }}</td>
+                <td>
+                    <span class="badge badge-{{ asistencia.estado }}">
+                        {{ asistencia.estado }}
+                    </span>
+                </td>
+                <td>{{ asistencia.entrada }} - {{ asistencia.salida }}</td>
+                <td>
+                    <a href="{% url 'editar_asistencia' asistencia.id_asistencia %}" class="btn btn-warning btn-sm">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{% url 'eliminar_asistencia' asistencia.id_asistencia %}" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="text-center py-5">
+    <i class="fas fa-user-friends fa-4x text-muted mb-3"></i>
+    <h3>No hay asistencias registradas</h3>
+    <a href="{% url 'agregar_asistencia' %}" class="btn btn-primary mt-3">
+        <i class="fas fa-plus"></i> Registrar Primera Asistencia
+    </a>
+</div>
+{% endif %}
+{% endblock %}

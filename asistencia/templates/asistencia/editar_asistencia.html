@@ -1,0 +1,49 @@
+{% extends 'asistencia/base.html' %}
+
+{% block content %}
+<h2>Editar Asistencia</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha:</label>
+            <input type="date" name="fecha" value="{{ asistencia.fecha|date:'Y-m-d' }}" class="form-control" required>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Clase:</label>
+            <input type="text" name="clase" value="{{ asistencia.clase }}" class="form-control" required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Estado:</label>
+            <select name="estado" class="form-select" required>
+                <option value="presente" {% if asistencia.estado == 'presente' %}selected{% endif %}>Presente</option>
+                <option value="ausente" {% if asistencia.estado == 'ausente' %}selected{% endif %}>Ausente</option>
+                <option value="tardanza" {% if asistencia.estado == 'tardanza' %}selected{% endif %}>Tardanza</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Hora Entrada:</label>
+            <input type="time" name="entrada" value="{{ asistencia.entrada|time:'H:i' }}" class="form-control" required>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Hora Salida:</label>
+            <input type="time" name="salida" value="{{ asistencia.salida|time:'H:i' }}" class="form-control" required>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-warning">
+        <i class="fas fa-edit"></i> Actualizar Asistencia
+    </button>
+    <a href="{% url 'index' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
